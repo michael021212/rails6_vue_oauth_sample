@@ -2,6 +2,9 @@
 <html>
   <head>
     <title>Rails6VueOauthSample</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@3.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,9 +14,61 @@
   </head>
 
   <body>
-    <div>Rails6VueOauthSample</div>
-    <%= link_to "トップ", root_path %>
-    <%= yield %>
+    <div id="app">
+      <v-app>
+        <v-system-bar app>Single HTML Template</v-system-bar>
+
+        <v-navigation-drawer app>
+          <v-sheet>Hello!</v-sheet>
+          <v-divider></v-divider>
+          <v-sheet>Left Bar</v-sheet>
+        </v-navigation-drawer>
+
+        <v-main>
+          <v-toolbar></v-toolbar>
+          <v-container fluid>
+            <div>Rails6VueOauthSample</div>
+            <%= link_to "トップ", root_path %>
+            <% if logged_in? %>
+              <%= link_to "ログアウト", logout_path, method: :delete %>
+            <% else %>
+              <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
+            <% end %>
+              <%= link_to "hospitals", hospitals_path %>
+            <%= yield %>
+            <h1 class="display-3">GYU-DON</h1>
+            <div class="display-1">{{message}}</div>
+            <v-chip close v-model="chip1" @click="onChipClick" @click:close="onClose">
+              <v-avatar>
+                <img src="https://randomuser.me/api/portraits/men/35.jpg" alt="trevor">
+              </v-avatar>
+                GYUDON MAN
+            </v-chip>
+          </v-container>
+        </v-main>
+        <v-footer app>hoge</v-footer>
+    </v-app>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: {
+                message: "this is the best of food.",
+                chip1: true
+            },
+            methods: {
+                onChipClick: function(ev) {
+                    this.message = "YOSHINOYA is better.";
+                },
+                onClose: function(ev) {
+                    this.message = "good night.";
+                }
+            }
+        })
+    </script>
     <%= stylesheet_pack_tag 'application_vue' %>
     <%= javascript_pack_tag 'application_vue' %>
   </body>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rails6VueOauthSample</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_pack_tag 'application'%>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+    <v-app>
+      <v-main>
+        <v-toolbar></v-toolbar>
+        <v-container fluid>
+          <%= render 'shared/flash_message' %>
+          <div>Rails6VueOauthSample</div>
+          <%= link_to "トップ", root_path %>
+          <% if logged_in? %>
+            <%= link_to "ログアウト", logout_path, method: :delete %>
+          <% else %>
+            <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
+          <% end %>
+          <%= yield %>
+        </v-container>
+      </v-main>
+    </v-app>
+    <%= stylesheet_pack_tag 'application_vue' %>
+    <%= javascript_pack_tag 'application_vue' %>
+  </body>
